@@ -5,6 +5,7 @@
 #define SAMPLING_FREQ 100
 #define SAMPLING_TIME 10 // 10ms
 
+void initialize_data(void); // must be called only once.
 float mean(const float *data, size_t n);
 float std_deviation(const float *data, size_t n);
 
@@ -23,7 +24,17 @@ void setup() {
 
   Serial.println("IMU initialized");
   Serial.println("Gyroscope sample rate = " + String(IMU.gyroscopeSampleRate()) + "Hz");
-  
+
+  initialize_data();
+
+  Serial.println(initial_mean);
+  Serial.println(initial_std_dev);
+}
+
+void loop() {
+}
+
+void initialize_data(void) {
   for (int i = 0; i < MINUTE_DATA; ++i) {
     while (!IMU.gyroscopeAvailable());
     float gx, gy, gz;
@@ -34,11 +45,6 @@ void setup() {
   }
   initial_mean = mean(w, sizeof(w) / sizeof(float));
   initial_std_dev = std_deviation(w, sizeof(w) / sizeof(float));
-  Serial.println(initial_mean);
-  Serial.println(initial_std_dev);
-}
-
-void loop() {
 }
 
 float mean(const float *data, size_t n) {
