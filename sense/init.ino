@@ -2,6 +2,7 @@
 
 // gyroscope == 각속도 데이터
 void initialize_data(void) {
+  float initial_gyro_data[DATAS_PER_MIN];
   for (int i = 0; i < DATAS_PER_MIN; ++i) {
     while (!IMU.gyroscopeAvailable());
     float gx, gy, gz;

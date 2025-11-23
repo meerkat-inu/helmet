@@ -13,7 +13,6 @@ Scheduler runner;
 // worker_id hard-coded
 danger_into_t info = { 1, D_NORMAL };
 
-float initial_gyro_data[DATAS_PER_MIN];
 float initial_mean;
 float initial_std_dev;
 float gyro_data[SAMPLING_FREQ];
