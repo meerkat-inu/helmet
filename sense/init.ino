@@ -7,10 +7,10 @@ void initialize_data(void) {
     while (!IMU.gyroscopeAvailable());
     float gx, gy, gz;
     IMU.readGyroscope(gx, gy, gz);
-    gyro_abs[i] = sqrt(gx * gx + gy * gy + gz * gz);
-    Serial.println(gyro_abs[i]);
+    initial_gyro_data[i] = sqrt(gx * gx + gy * gy + gz * gz);
+    Serial.println(initial_gyro_data[i]);
     delay(SAMPLING_DELAY);
   }
-  initial_mean = mean(w, sizeof(w) / sizeof(float));
-  initial_std_dev = std_deviation(w, sizeof(w) / sizeof(float));
+  initial_mean = mean(initial_gyro_data, sizeof(initial_gyro_data) / sizeof(float));
+  initial_std_dev = std_deviation(initial_gyro_data, sizeof(initial_gyro_data) / sizeof(float));
 }

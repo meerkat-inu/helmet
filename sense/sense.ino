@@ -3,15 +3,19 @@
 #include "sense.h"
 #include "evaluate.h"
 #include <string.h>
+#include "SD.h"
 
 void sample_gyro(void);
+
+#define CSPIN 7
 
 Task task_sample_gyro(SAMPLING_DELAY, TASK_FOREVER, sample_gyro);
 Task task_evaluate_risk(0, 1, evaluate_risk);
 Scheduler runner;
+File f;
 
 // worker_id hard-coded
-danger_into_t info = { 1, D_NORMAL };
+danger_info_t info = { 1, D_NORMAL };
 
 float initial_mean;
 float initial_std_dev;
@@ -22,6 +26,19 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
+/*
+  if (!SD.begin(D7)) {
+    Serial.println("Failed to begin SD card on pin " + String(D7));
+    while (1);
+  }
+  Serial.println("SD card successfully began on pin " + String(D7));
+
+  f = SD.open("danger_info.csv", FILE_WRITE);
+  if (!f) {
+    Serial.println("Failed to open a file");
+    while (1);
+  }
+*/
   if (!IMU.begin()) {
     Serial.println("Failed to initialize IMU");
     while (1);
@@ -42,6 +59,7 @@ void setup() {
 }
 
 void loop() {
+  runner.execute();
 }
 
 void sample_gyro(void) {
@@ -55,6 +73,7 @@ void sample_gyro(void) {
 
   if (sample_count < SAMPLING_FREQ) {
     gyro_data[sample_count] = gyro_abs;
+    //Serial.println("gyro_abs: " + String(gyro_abs));
     ++sample_count;
   }
   else {
