@@ -4,7 +4,6 @@
 #include "evaluate.h"
 #include <string.h>
 
-float ax, ay, az;
 float max_ax, max_az, min_ax, min_az;
 #define TP 50
 float accel[3][TP];
@@ -75,7 +74,6 @@ float min_arr(float *arr, int size) {
 void sample_accel(void) {
   static int idx = 0;
   static int eval_first = 1;
-  //float ax, ay, az;
   while (!IMU.accelerationAvailable());
   IMU.readAcceleration(accel[0][idx], accel[1][idx], accel[2][idx]);
   ++idx;
