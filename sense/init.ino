@@ -8,7 +8,6 @@ void initialize_data(void) {
     float gx, gy, gz;
     IMU.readGyroscope(gx, gy, gz);
     initial_gyro_data[i] = sqrt(gx * gx + gy * gy + gz * gz);
-    //Serial.println(initial_gyro_data[i]);
     f.println(String(gx) + "," + String(gy) + "," + String(gz));
     f.flush();
     delay(SAMPLING_DELAY);
@@ -44,9 +43,6 @@ void initialize_imu(void) {
 void playSoundByLevel(int level) {
   mp3.playMp3Folder(level);
   delay(3000);
-//  while (mp3.read() == Busy) {
-//    Serial.println("MP3 is busy");
-//  }
 }
 
 // RX, TX 핀에 제대로 연결.
@@ -54,11 +50,9 @@ void playSoundByLevel(int level) {
 // mp3 tx -> nano rx
 void initialize_mp3(void) {
   mp3Serial.begin(9600);
-  //pinMode(MP3_BUSY, INPUT);
 
   while (!mp3.begin(mp3Serial));
 
   mp3.volume(15);
   playSoundByLevel(2);
-  //mp3.playMp3Folder(1);
 }
