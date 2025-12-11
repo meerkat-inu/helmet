@@ -54,5 +54,5 @@ void initialize_mp3(void) {
   while (!mp3.begin(mp3Serial));
 
   mp3.volume(15);
-  playSoundByLevel(2);
+  //playSoundByLevel(2);
 }
