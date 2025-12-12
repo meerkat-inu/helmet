@@ -32,12 +32,15 @@ void initialize_sd(int pin_no) {
 
 void initialize_imu(void) {
   if (!IMU.begin()) {
+    /*
     Serial.println("Failed to initialize IMU");
+    */
     while (1);
   }
-
+/*
   Serial.println("IMU initialized");
   Serial.println("Gyroscope sample rate = " + String(IMU.gyroscopeSampleRate()) + "Hz");
+  */
 }
 
 void playSoundByLevel(int level) {
@@ -53,6 +56,6 @@ void initialize_mp3(void) {
 
   while (!mp3.begin(mp3Serial));
 
-  mp3.volume(15);
-  //playSoundByLevel(2);
+  mp3.volume(30);
+  playSoundByLevel(2);
 }
